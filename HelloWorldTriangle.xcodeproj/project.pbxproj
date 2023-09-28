@@ -23,6 +23,9 @@
 		44A391932AC63C0000FA225D /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391922AC63C0000FA225D /* Material.swift */; };
 		44A391C12AC63E1000FA225D /* cubeTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C02AC63E1000FA225D /* cubeTexture.jpg */; };
 		44A391C32AC641C400FA225D /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391C22AC641C400FA225D /* Entity.swift */; };
+		44A391C72AC644DB00FA225D /* ground.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C52AC644DB00FA225D /* ground.mtl */; };
+		44A391C82AC644DB00FA225D /* ground.obj in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C62AC644DB00FA225D /* ground.obj */; };
+		44A391CA2AC6455500FA225D /* dirt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C92AC6455500FA225D /* dirt.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		44A391922AC63C0000FA225D /* Material.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		44A391C02AC63E1000FA225D /* cubeTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cubeTexture.jpg; sourceTree = "<group>"; };
 		44A391C22AC641C400FA225D /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		44A391C52AC644DB00FA225D /* ground.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ground.mtl; sourceTree = "<group>"; };
+		44A391C62AC644DB00FA225D /* ground.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ground.obj; sourceTree = "<group>"; };
+		44A391C92AC6455500FA225D /* dirt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dirt.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +82,7 @@
 		447A5B732AC6112F003CC565 /* HelloWorldTriangle */ = {
 			isa = PBXGroup;
 			children = (
-				447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */,
+				44A391C42AC643FD00FA225D /* textures */,
 				44A391892AC62B3700FA225D /* models */,
 				44A3917C2AC61FEA00FA225D /* View */,
 				44A3917B2AC61FDE00FA225D /* Model */,
@@ -85,7 +91,7 @@
 				447A5B7A2AC6112F003CC565 /* Preview Content */,
 				447A5B852AC618AB003CC565 /* Shaders.metal */,
 				44A391852AC6235000FA225D /* LinearAlgebro.swift */,
-				44A391C02AC63E1000FA225D /* cubeTexture.jpg */,
+				447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */,
 			);
 			path = HelloWorldTriangle;
 			sourceTree = "<group>";
@@ -125,8 +131,19 @@
 			children = (
 				44A3918A2AC62B3700FA225D /* cube.obj */,
 				44A3918B2AC62B3700FA225D /* cube.mtl */,
+				44A391C52AC644DB00FA225D /* ground.mtl */,
+				44A391C62AC644DB00FA225D /* ground.obj */,
 			);
 			path = models;
+			sourceTree = "<group>";
+		};
+		44A391C42AC643FD00FA225D /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				44A391C92AC6455500FA225D /* dirt.jpg */,
+				44A391C02AC63E1000FA225D /* cubeTexture.jpg */,
+			);
+			path = textures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,9 +205,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				44A3918C2AC62B3700FA225D /* cube.obj in Resources */,
+				44A391C82AC644DB00FA225D /* ground.obj in Resources */,
+				44A391CA2AC6455500FA225D /* dirt.jpg in Resources */,
 				447A5B7C2AC6112F003CC565 /* Preview Assets.xcassets in Resources */,
 				44A3918D2AC62B3700FA225D /* cube.mtl in Resources */,
 				44A391C12AC63E1000FA225D /* cubeTexture.jpg in Resources */,
+				44A391C72AC644DB00FA225D /* ground.mtl in Resources */,
 				447A5B792AC6112F003CC565 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

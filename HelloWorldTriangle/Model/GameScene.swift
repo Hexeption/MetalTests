@@ -12,17 +12,24 @@ class GameScene: ObservableObject {
     
     @Published var player: Entity
     @Published var cubes: [Entity]
+    @Published var groundTiles: [Entity]
     
     init() {
+        
+        cubes = []
+        groundTiles = []
         
         let newPlayer = Entity()
         newPlayer.addCameraComponent(position: [-6, 6, 4], eulers: [0, 110, -45])
         player = newPlayer
         
-        cubes = []
         let newCube = Entity()
         newCube.addTransformComponent(position: [0.0, 0.0, 1.0], eulers: [0.0, 0.0, 0.0])
         cubes.append(newCube)
+        
+        let newTile = Entity()
+        newTile.addTransformComponent(position: [0.0, 0.0, 0.0], eulers: [90.0, 0.0, 0.0])
+        groundTiles.append(newTile)
     }
     
     func update() {
@@ -30,6 +37,10 @@ class GameScene: ObservableObject {
         
         for cube in cubes {
             cube.update()
+        }
+        
+        for groundTile in groundTiles {
+            groundTile.update()
         }
     }
     

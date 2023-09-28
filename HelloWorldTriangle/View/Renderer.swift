@@ -16,9 +16,14 @@ class Renderer: NSObject, MTKViewDelegate {
     var materialLoader: MTKTextureLoader
     let pipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
+    
     let scene: GameScene
-    let mesh: OBJMesh
-    let material: Material
+    
+    let cubeMesh: OBJMesh
+    let groundMesh: OBJMesh
+    
+    let rockMaterial: Material
+    let dirtMaterial: Material
     
     init(_ parent: ContentView, scene: GameScene) {
         self.parent = parent
@@ -29,15 +34,18 @@ class Renderer: NSObject, MTKViewDelegate {
         self.allocator = MTKMeshBufferAllocator(device: metalDevice)
         self.materialLoader = MTKTextureLoader(device: metalDevice)
         
-        mesh = OBJMesh(device: metalDevice, allocator: allocator, fileName: "cube")
-        material = Material(device: metalDevice, allocator: materialLoader, fileName: "cubeTexture")
+        cubeMesh = OBJMesh(device: metalDevice, allocator: allocator, fileName: "cube")
+        rockMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cubeTexture")
+        
+        groundMesh = OBJMesh(device: metalDevice, allocator: allocator, fileName: "ground")
+        dirtMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "dirt")
         
         let pipeDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
         pipeDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
         pipeDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
         pipeDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        pipeDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh.metalMesh.vertexDescriptor)
+        pipeDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(cubeMesh.metalMesh.vertexDescriptor)
         pipeDescriptor.depthAttachmentPixelFormat = .depth32Float
         
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -89,22 +97,44 @@ class Renderer: NSObject, MTKViewDelegate {
         )
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
         
+        // Cube
         renderEncoder?.setVertexBuffer(
-            mesh.metalMesh.vertexBuffers[0].buffer,
+            cubeMesh.metalMesh.vertexBuffers[0].buffer,
             offset: 0,
             index: 0
         )
         
-        renderEncoder?.setFragmentTexture(material.texture, index: 0)
-        renderEncoder?.setFragmentSamplerState(material.sampler, index: 0)
-        
-        // Render the triangle
-        
+        renderEncoder?.setFragmentTexture(rockMaterial.texture, index: 0)
+        renderEncoder?.setFragmentSamplerState(rockMaterial.sampler, index: 0)
         for cube in scene.cubes {
             
             renderEncoder?.setVertexBytes(&(cube.model!), length: MemoryLayout<matrix_float4x4>.stride, index: 1)
             
-            for submesh in mesh.metalMesh.submeshes {
+            for submesh in cubeMesh.metalMesh.submeshes {
+                renderEncoder?.drawIndexedPrimitives(
+                    type: .triangle,
+                    indexCount: submesh.indexCount,
+                    indexType: submesh.indexType,
+                    indexBuffer: submesh.indexBuffer.buffer,
+                    indexBufferOffset: submesh.indexBuffer.offset
+                )
+            }
+        }
+        
+        // Ground
+        renderEncoder?.setVertexBuffer(
+            groundMesh.metalMesh.vertexBuffers[0].buffer,
+            offset: 0,
+            index: 0
+        )
+        
+        renderEncoder?.setFragmentTexture(dirtMaterial.texture, index: 0)
+        renderEncoder?.setFragmentSamplerState(dirtMaterial.sampler, index: 0)
+        for ground in scene.groundTiles {
+            
+            renderEncoder?.setVertexBytes(&(ground.model!), length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            
+            for submesh in groundMesh.metalMesh.submeshes {
                 renderEncoder?.drawIndexedPrimitives(
                     type: .triangle,
                     indexCount: submesh.indexCount,
