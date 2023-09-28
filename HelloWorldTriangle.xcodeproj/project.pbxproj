@@ -11,6 +11,8 @@
 		447A5B772AC6112F003CC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B762AC6112F003CC565 /* ContentView.swift */; };
 		447A5B792AC6112F003CC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447A5B782AC6112F003CC565 /* Assets.xcassets */; };
 		447A5B7C2AC6112F003CC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447A5B7B2AC6112F003CC565 /* Preview Assets.xcassets */; };
+		447A5B832AC611C1003CC565 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B822AC611C1003CC565 /* Renderer.swift */; };
+		447A5B862AC618AB003CC565 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B852AC618AB003CC565 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,9 @@
 		447A5B762AC6112F003CC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		447A5B782AC6112F003CC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		447A5B7B2AC6112F003CC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		447A5B822AC611C1003CC565 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		447A5B842AC616A8003CC565 /* definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
+		447A5B852AC618AB003CC565 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +58,11 @@
 			children = (
 				447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */,
 				447A5B762AC6112F003CC565 /* ContentView.swift */,
+				447A5B842AC616A8003CC565 /* definitions.h */,
 				447A5B782AC6112F003CC565 /* Assets.xcassets */,
 				447A5B7A2AC6112F003CC565 /* Preview Content */,
+				447A5B822AC611C1003CC565 /* Renderer.swift */,
+				447A5B852AC618AB003CC565 /* Shaders.metal */,
 			);
 			path = HelloWorldTriangle;
 			sourceTree = "<group>";
@@ -137,7 +145,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				447A5B862AC618AB003CC565 /* Shaders.metal in Sources */,
 				447A5B772AC6112F003CC565 /* ContentView.swift in Sources */,
+				447A5B832AC611C1003CC565 /* Renderer.swift in Sources */,
 				447A5B752AC6112F003CC565 /* HelloWorldTriangleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +298,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.magmafoundation.HelloWorldTriangle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = HelloWorldTriangle/definitions.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -317,6 +328,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.magmafoundation.HelloWorldTriangle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = HelloWorldTriangle/definitions.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
