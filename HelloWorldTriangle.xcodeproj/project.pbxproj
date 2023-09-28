@@ -14,8 +14,6 @@
 		447A5B832AC611C1003CC565 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B822AC611C1003CC565 /* Renderer.swift */; };
 		447A5B862AC618AB003CC565 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B852AC618AB003CC565 /* Shaders.metal */; };
 		44A3917E2AC620A700FA225D /* TrinagleMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3917D2AC620A700FA225D /* TrinagleMesh.swift */; };
-		44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3917F2AC6214E00FA225D /* SimpleComponent.swift */; };
-		44A391822AC6218B00FA225D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391812AC6218B00FA225D /* Camera.swift */; };
 		44A391842AC6220700FA225D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391832AC6220700FA225D /* GameScene.swift */; };
 		44A391862AC6235000FA225D /* LinearAlgebro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391852AC6235000FA225D /* LinearAlgebro.swift */; };
 		44A3918C2AC62B3700FA225D /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 44A3918A2AC62B3700FA225D /* cube.obj */; };
@@ -24,6 +22,7 @@
 		44A391912AC6352A00FA225D /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391902AC6352A00FA225D /* AppView.swift */; };
 		44A391932AC63C0000FA225D /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391922AC63C0000FA225D /* Material.swift */; };
 		44A391C12AC63E1000FA225D /* cubeTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C02AC63E1000FA225D /* cubeTexture.jpg */; };
+		44A391C32AC641C400FA225D /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391C22AC641C400FA225D /* Entity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +35,6 @@
 		447A5B842AC616A8003CC565 /* definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
 		447A5B852AC618AB003CC565 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		44A3917D2AC620A700FA225D /* TrinagleMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrinagleMesh.swift; sourceTree = "<group>"; };
-		44A3917F2AC6214E00FA225D /* SimpleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleComponent.swift; sourceTree = "<group>"; };
-		44A391812AC6218B00FA225D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		44A391832AC6220700FA225D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		44A391852AC6235000FA225D /* LinearAlgebro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebro.swift; sourceTree = "<group>"; };
 		44A3918A2AC62B3700FA225D /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
@@ -46,6 +43,7 @@
 		44A391902AC6352A00FA225D /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		44A391922AC63C0000FA225D /* Material.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		44A391C02AC63E1000FA225D /* cubeTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cubeTexture.jpg; sourceTree = "<group>"; };
+		44A391C22AC641C400FA225D /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +101,8 @@
 		44A3917B2AC61FDE00FA225D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				44A3917F2AC6214E00FA225D /* SimpleComponent.swift */,
-				44A391812AC6218B00FA225D /* Camera.swift */,
 				44A391832AC6220700FA225D /* GameScene.swift */,
+				44A391C22AC641C400FA225D /* Entity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -212,9 +209,8 @@
 				44A391932AC63C0000FA225D /* Material.swift in Sources */,
 				44A391912AC6352A00FA225D /* AppView.swift in Sources */,
 				447A5B832AC611C1003CC565 /* Renderer.swift in Sources */,
-				44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */,
 				447A5B752AC6112F003CC565 /* HelloWorldTriangleApp.swift in Sources */,
-				44A391822AC6218B00FA225D /* Camera.swift in Sources */,
+				44A391C32AC641C400FA225D /* Entity.swift in Sources */,
 				44A391862AC6235000FA225D /* LinearAlgebro.swift in Sources */,
 				44A3917E2AC620A700FA225D /* TrinagleMesh.swift in Sources */,
 			);

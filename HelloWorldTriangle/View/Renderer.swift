@@ -80,16 +80,12 @@ class Renderer: NSObject, MTKViewDelegate {
         renderEncoder?.setDepthStencilState(depthStencilState)
         
         var cameraData: CameraParameters = CameraParameters()
-        cameraData.view = Matrix44.create_lookat(
-            eye: scene.player.position,
-            target: scene.player.position + scene.player.forwards,
-            up: scene.player.up
-        )
+        cameraData.view = scene.player.view!
         cameraData.projection = Matrix44.create_perspective_projection(
             fovy: 45,
             aspect: 800/600,
             near: 0.1,
-            far: 10
+            far: 20
         )
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
         
@@ -106,9 +102,7 @@ class Renderer: NSObject, MTKViewDelegate {
         
         for cube in scene.cubes {
             
-            var modelMatrix: matrix_float4x4 = Matrix44.create_from_rotation(eulers: cube.eulers)
-            modelMatrix = Matrix44.create_from_translation(translation: cube.position) * modelMatrix;
-            renderEncoder?.setVertexBytes(&modelMatrix, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            renderEncoder?.setVertexBytes(&(cube.model!), length: MemoryLayout<matrix_float4x4>.stride, index: 1)
             
             for submesh in mesh.metalMesh.submeshes {
                 renderEncoder?.drawIndexedPrimitives(
