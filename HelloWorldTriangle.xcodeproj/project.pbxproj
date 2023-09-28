@@ -7,23 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		447A5B752AC6112F003CC565 /* HelloWorldTriangleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */; };
+		447A5B752AC6112F003CC565 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B742AC6112F003CC565 /* AppView.swift */; };
 		447A5B772AC6112F003CC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B762AC6112F003CC565 /* ContentView.swift */; };
 		447A5B792AC6112F003CC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447A5B782AC6112F003CC565 /* Assets.xcassets */; };
 		447A5B7C2AC6112F003CC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447A5B7B2AC6112F003CC565 /* Preview Assets.xcassets */; };
 		447A5B832AC611C1003CC565 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B822AC611C1003CC565 /* Renderer.swift */; };
 		447A5B862AC618AB003CC565 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 447A5B852AC618AB003CC565 /* Shaders.metal */; };
+		44A3917E2AC620A700FA225D /* TrinagleMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3917D2AC620A700FA225D /* TrinagleMesh.swift */; };
+		44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3917F2AC6214E00FA225D /* SimpleComponent.swift */; };
+		44A391822AC6218B00FA225D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391812AC6218B00FA225D /* Camera.swift */; };
+		44A391842AC6220700FA225D /* RenderScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391832AC6220700FA225D /* RenderScene.swift */; };
+		44A391862AC6235000FA225D /* LinearAlgebro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391852AC6235000FA225D /* LinearAlgebro.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		447A5B712AC6112F003CC565 /* HelloWorldTriangle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorldTriangle.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldTriangleApp.swift; sourceTree = "<group>"; };
+		447A5B742AC6112F003CC565 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		447A5B762AC6112F003CC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		447A5B782AC6112F003CC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		447A5B7B2AC6112F003CC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		447A5B822AC611C1003CC565 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		447A5B842AC616A8003CC565 /* definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
 		447A5B852AC618AB003CC565 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		44A3917D2AC620A700FA225D /* TrinagleMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrinagleMesh.swift; sourceTree = "<group>"; };
+		44A3917F2AC6214E00FA225D /* SimpleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleComponent.swift; sourceTree = "<group>"; };
+		44A391812AC6218B00FA225D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		44A391832AC6220700FA225D /* RenderScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderScene.swift; sourceTree = "<group>"; };
+		44A391852AC6235000FA225D /* LinearAlgebro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebro.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +66,13 @@
 		447A5B732AC6112F003CC565 /* HelloWorldTriangle */ = {
 			isa = PBXGroup;
 			children = (
-				447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */,
-				447A5B762AC6112F003CC565 /* ContentView.swift */,
+				44A3917C2AC61FEA00FA225D /* View */,
+				44A3917B2AC61FDE00FA225D /* Model */,
 				447A5B842AC616A8003CC565 /* definitions.h */,
 				447A5B782AC6112F003CC565 /* Assets.xcassets */,
 				447A5B7A2AC6112F003CC565 /* Preview Content */,
-				447A5B822AC611C1003CC565 /* Renderer.swift */,
 				447A5B852AC618AB003CC565 /* Shaders.metal */,
+				44A391852AC6235000FA225D /* LinearAlgebro.swift */,
 			);
 			path = HelloWorldTriangle;
 			sourceTree = "<group>";
@@ -73,6 +83,27 @@
 				447A5B7B2AC6112F003CC565 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		44A3917B2AC61FDE00FA225D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				44A3917F2AC6214E00FA225D /* SimpleComponent.swift */,
+				44A391812AC6218B00FA225D /* Camera.swift */,
+				44A391832AC6220700FA225D /* RenderScene.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		44A3917C2AC61FEA00FA225D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				447A5B742AC6112F003CC565 /* AppView.swift */,
+				447A5B762AC6112F003CC565 /* ContentView.swift */,
+				447A5B822AC611C1003CC565 /* Renderer.swift */,
+				44A3917D2AC620A700FA225D /* TrinagleMesh.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,8 +178,13 @@
 			files = (
 				447A5B862AC618AB003CC565 /* Shaders.metal in Sources */,
 				447A5B772AC6112F003CC565 /* ContentView.swift in Sources */,
+				44A391842AC6220700FA225D /* RenderScene.swift in Sources */,
 				447A5B832AC611C1003CC565 /* Renderer.swift in Sources */,
-				447A5B752AC6112F003CC565 /* HelloWorldTriangleApp.swift in Sources */,
+				44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */,
+				447A5B752AC6112F003CC565 /* AppView.swift in Sources */,
+				44A391822AC6218B00FA225D /* Camera.swift in Sources */,
+				44A391862AC6235000FA225D /* LinearAlgebro.swift in Sources */,
+				44A3917E2AC620A700FA225D /* TrinagleMesh.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

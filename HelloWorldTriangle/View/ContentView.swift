@@ -26,6 +26,7 @@ struct ContentView: UIViewRepresentable {
         
         metalView.framebufferOnly = false
         metalView.drawableSize = metalView.frame.size
+        metalView.isPaused = false
         
         return metalView
     }
