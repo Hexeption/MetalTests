@@ -17,7 +17,7 @@ class Renderer: NSObject, MTKViewDelegate {
     let scene: GameScene
     let mesh: OBJMesh
     
-    init(_ parent: ContentView) {
+    init(_ parent: ContentView, scene: GameScene) {
         self.parent = parent
         if let metalDevice = MTLCreateSystemDefaultDevice() {
             self.metalDevice = metalDevice
@@ -40,7 +40,7 @@ class Renderer: NSObject, MTKViewDelegate {
             fatalError()
         }
         
-        scene = GameScene()
+        self.scene = scene
         
         super.init()
     }

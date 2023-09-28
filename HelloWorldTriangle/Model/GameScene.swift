@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
-class GameScene {
+class GameScene: ObservableObject {
     
-    var player: Camera
-    var cubes: [SimpleComponent]
+    @Published var player: Camera
+    @Published var cubes: [SimpleComponent]
     
     init() {
         player = Camera(
@@ -35,5 +36,27 @@ class GameScene {
                 cube.eulers.z -= 360
             }
         }
+    }
+    
+    func spinPlayer(offset: CGSize) {
+        let dTheta: Float = Float(offset.width)
+        let dPhi: Float = Float(offset.height)
+        
+        player.eulers.z -= 0.001 * dTheta
+        player.eulers.y += 0.001 * dPhi
+        
+        if player.eulers.z < 0 {
+            player.eulers.z -= 360
+        } else if player.eulers.z > 360 {
+            player.eulers.z -= 360
+        }
+        
+        if player.eulers.y < 1 {
+            player.eulers.y = 1
+        } else if player.eulers.y > 179 {
+            player.eulers.y = 179
+        }
+        
+        player.updateVectors()
     }
 }
