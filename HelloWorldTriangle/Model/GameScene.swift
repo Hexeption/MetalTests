@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RenderScene {
+class GameScene {
     
     var player: Camera
     var cubes: [SimpleComponent]

@@ -14,7 +14,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var metalCommandQueue: MTLCommandQueue!
     var allocator: MTKMeshBufferAllocator
     let pipelineState: MTLRenderPipelineState
-    let scene: RenderScene
+    let scene: GameScene
     let mesh: OBJMesh
     
     init(_ parent: ContentView) {
@@ -40,7 +40,7 @@ class Renderer: NSObject, MTKViewDelegate {
             fatalError()
         }
         
-        scene = RenderScene()
+        scene = GameScene()
         
         super.init()
     }

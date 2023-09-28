@@ -16,7 +16,7 @@
 		44A3917E2AC620A700FA225D /* TrinagleMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3917D2AC620A700FA225D /* TrinagleMesh.swift */; };
 		44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3917F2AC6214E00FA225D /* SimpleComponent.swift */; };
 		44A391822AC6218B00FA225D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391812AC6218B00FA225D /* Camera.swift */; };
-		44A391842AC6220700FA225D /* RenderScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391832AC6220700FA225D /* RenderScene.swift */; };
+		44A391842AC6220700FA225D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391832AC6220700FA225D /* GameScene.swift */; };
 		44A391862AC6235000FA225D /* LinearAlgebro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391852AC6235000FA225D /* LinearAlgebro.swift */; };
 		44A3918C2AC62B3700FA225D /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 44A3918A2AC62B3700FA225D /* cube.obj */; };
 		44A3918D2AC62B3700FA225D /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 44A3918B2AC62B3700FA225D /* cube.mtl */; };
@@ -35,7 +35,7 @@
 		44A3917D2AC620A700FA225D /* TrinagleMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrinagleMesh.swift; sourceTree = "<group>"; };
 		44A3917F2AC6214E00FA225D /* SimpleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleComponent.swift; sourceTree = "<group>"; };
 		44A391812AC6218B00FA225D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		44A391832AC6220700FA225D /* RenderScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderScene.swift; sourceTree = "<group>"; };
+		44A391832AC6220700FA225D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		44A391852AC6235000FA225D /* LinearAlgebro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebro.swift; sourceTree = "<group>"; };
 		44A3918A2AC62B3700FA225D /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		44A3918B2AC62B3700FA225D /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 			children = (
 				44A3917F2AC6214E00FA225D /* SimpleComponent.swift */,
 				44A391812AC6218B00FA225D /* Camera.swift */,
-				44A391832AC6220700FA225D /* RenderScene.swift */,
+				44A391832AC6220700FA225D /* GameScene.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -198,7 +198,7 @@
 				44A3918F2AC62C4500FA225D /* OBJMesh.swift in Sources */,
 				447A5B862AC618AB003CC565 /* Shaders.metal in Sources */,
 				447A5B772AC6112F003CC565 /* ContentView.swift in Sources */,
-				44A391842AC6220700FA225D /* RenderScene.swift in Sources */,
+				44A391842AC6220700FA225D /* GameScene.swift in Sources */,
 				447A5B832AC611C1003CC565 /* Renderer.swift in Sources */,
 				44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */,
 				447A5B752AC6112F003CC565 /* AppView.swift in Sources */,
