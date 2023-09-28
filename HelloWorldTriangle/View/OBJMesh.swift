@@ -27,10 +27,17 @@ class OBJMesh {
         vertexDescriptor.attributes[0].bufferIndex = 0
         offset += MemoryLayout<SIMD3<Float>>.stride
         
+        // texture
+        vertexDescriptor.attributes[1].format = .float2
+        vertexDescriptor.attributes[1].offset = offset
+        vertexDescriptor.attributes[1].bufferIndex = 0
+        offset += MemoryLayout<SIMD2<Float>>.stride
+        
         vertexDescriptor.layouts[0].stride = offset
         
         let meshDescriptor = MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
         (meshDescriptor.attributes[0] as! MDLVertexAttribute).name = MDLVertexAttributePosition
+        (meshDescriptor.attributes[1] as! MDLVertexAttribute).name = MDLVertexAttributeTextureCoordinate
         
         let asset = MDLAsset(
             url: meshURL,

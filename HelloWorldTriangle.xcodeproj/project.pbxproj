@@ -22,6 +22,8 @@
 		44A3918D2AC62B3700FA225D /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 44A3918B2AC62B3700FA225D /* cube.mtl */; };
 		44A3918F2AC62C4500FA225D /* OBJMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3918E2AC62C4500FA225D /* OBJMesh.swift */; };
 		44A391912AC6352A00FA225D /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391902AC6352A00FA225D /* AppView.swift */; };
+		44A391932AC63C0000FA225D /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A391922AC63C0000FA225D /* Material.swift */; };
+		44A391C12AC63E1000FA225D /* cubeTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C02AC63E1000FA225D /* cubeTexture.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		44A3918B2AC62B3700FA225D /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		44A3918E2AC62C4500FA225D /* OBJMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBJMesh.swift; sourceTree = "<group>"; };
 		44A391902AC6352A00FA225D /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		44A391922AC63C0000FA225D /* Material.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
+		44A391C02AC63E1000FA225D /* cubeTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cubeTexture.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 				447A5B7A2AC6112F003CC565 /* Preview Content */,
 				447A5B852AC618AB003CC565 /* Shaders.metal */,
 				44A391852AC6235000FA225D /* LinearAlgebro.swift */,
+				44A391C02AC63E1000FA225D /* cubeTexture.jpg */,
 			);
 			path = HelloWorldTriangle;
 			sourceTree = "<group>";
@@ -113,6 +118,7 @@
 				44A3917D2AC620A700FA225D /* TrinagleMesh.swift */,
 				44A3918E2AC62C4500FA225D /* OBJMesh.swift */,
 				44A391902AC6352A00FA225D /* AppView.swift */,
+				44A391922AC63C0000FA225D /* Material.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -187,6 +193,7 @@
 				44A3918C2AC62B3700FA225D /* cube.obj in Resources */,
 				447A5B7C2AC6112F003CC565 /* Preview Assets.xcassets in Resources */,
 				44A3918D2AC62B3700FA225D /* cube.mtl in Resources */,
+				44A391C12AC63E1000FA225D /* cubeTexture.jpg in Resources */,
 				447A5B792AC6112F003CC565 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,6 +209,7 @@
 				447A5B862AC618AB003CC565 /* Shaders.metal in Sources */,
 				447A5B772AC6112F003CC565 /* ContentView.swift in Sources */,
 				44A391842AC6220700FA225D /* GameScene.swift in Sources */,
+				44A391932AC63C0000FA225D /* Material.swift in Sources */,
 				44A391912AC6352A00FA225D /* AppView.swift in Sources */,
 				447A5B832AC611C1003CC565 /* Renderer.swift in Sources */,
 				44A391802AC6214E00FA225D /* SimpleComponent.swift in Sources */,
