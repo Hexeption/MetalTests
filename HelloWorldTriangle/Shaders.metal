@@ -10,6 +10,10 @@ using namespace metal;
 
 #include "definitions.h"
 
+float3 applyDirectionalLight(float3 normal, DirectionalLight light, float3 baseColor, float3 fragCamera);
+float3 applySpotLight(float3 position, float3 normal, Spotlight light, float3 baseColor, float3 fragCamera);
+float3 applyPointLight(float3 position, float3 normal, Pointlight light, float3 baseColor, float3 fragCamera);
+
 struct VertexIn {
     float4 position [[attribute(0)]];
     float2 textureCoord [[attribute(1)]];
@@ -63,48 +67,77 @@ fragment float4 fragmentShader(
 ) {
     float3 baseColor = float3(objectTexture.sample(samplerObject, input.textureCoord));
     
-    float3 color = 0.2 * baseColor;
-    
     //directions
     float3 fragCamera = normalize(input.cameraPos - input.fragPos);
-    float3 halfVec = normalize(-sun.forwards + fragCamera);
+
+    //ambient
+    float3 color = 0.2 * baseColor;
     
-    //diffuse
-    float lightAmmount = max(0.0, dot(input.normal, -sun.forwards));
-    color += lightAmmount * baseColor * sun.color;
+    //sun
+    color += applyDirectionalLight(input.normal, sun, baseColor, fragCamera);
     
-    //specular
-    lightAmmount = pow(max(0.0, dot(input.normal, halfVec)), 64);
-    color += lightAmmount * baseColor * sun.color;
-    
-    //directions
-    float3 fragLight = normalize(spotlight.position - input.fragPos);
-    halfVec = normalize(fragLight + fragCamera);
-    
-    //diffuse
-    lightAmmount = max(0.0, dot(input.normal, fragLight)) * pow(max(0.0, dot(spotlight.forwards, -fragLight)), 32);
-    color += lightAmmount * baseColor * spotlight.color;
-    
-    //specular
-    lightAmmount = pow(max(0.0, dot(input.normal, halfVec)), 64) * pow(max(0.0, dot(spotlight.forwards, -fragLight)), 32);
-    color += lightAmmount * baseColor * spotlight.color;
+    //spotlight
+    color += applySpotLight(input.fragPos, input.normal, spotlight, baseColor, fragCamera);
     
     for (uint i = 0; i < fragUBO.lightCount; i++) {
-        //directions
-        float3 fragLight = normalize(pointLights[i].position - input.fragPos);
-        halfVec = normalize(fragLight + fragCamera);
-        
-        //diffuse
-        lightAmmount = max(0.0, dot(input.normal, fragLight));
-        color += lightAmmount * baseColor * pointLights[i].color;
-        
-        //specular
-        lightAmmount = pow(max(0.0, dot(input.normal, halfVec)), 64);
-        color += lightAmmount * baseColor * pointLights[i].color;
+        color += applyPointLight(input.fragPos, input.normal, pointLights[i], baseColor, fragCamera);
     }
-    
     
     return float4(color, 1.0);
 };
+
+float3 applyDirectionalLight(float3 normal, DirectionalLight light, float3 baseColor, float3 fragCamera) {
+    
+    float3 result = float3(0.0);
+    
+    float3 halfVec = normalize(-light.forwards + fragCamera);
+    
+    //diffuse
+    float lightAmmount = max(0.0, dot(normal, -light.forwards));
+    result += lightAmmount * baseColor * light.color;
+    
+    //specular
+    lightAmmount = pow(max(0.0, dot(normal, halfVec)), 64);
+    result += lightAmmount * baseColor * light.color;
+    
+    return result;
+}
+
+float3 applySpotLight(float3 position, float3 normal, Spotlight light, float3 baseColor, float3 fragCamera) {
+    
+    float3 result = float3(0.0);
+    
+    //directions
+    float3 fragLight = normalize(light.position - position);
+    float3 halfVec = normalize(fragLight + fragCamera);
+    
+    //diffuse
+    float lightAmmount = max(0.0, dot(normal, fragLight)) * pow(max(0.0, dot(fragLight, light.forwards)), 16);
+    result += lightAmmount * baseColor * light.color;
+    
+    //specular
+    lightAmmount = pow(max(0.0, dot(normal, halfVec)), 64) * pow(max(0.0, dot(fragLight, light.forwards)), 16);
+    result += lightAmmount * baseColor * light.color;
+    
+    return result;
+}
+
+float3 applyPointLight(float3 position, float3 normal, Pointlight light, float3 baseColor, float3 fragCamera) {
+    float3 result = float3(0.0);
+    
+    //directions
+    float3 fragLight = normalize(light.position - position);
+    float3 halfVec = normalize(fragLight + fragCamera);
+    
+    //diffuse
+    float lightAmount = max(0.0, dot(normal, fragLight));
+    result += lightAmount * baseColor * light.color;
+    
+    //specular
+    lightAmount = pow(max(0.0, dot(normal, halfVec)), 64);
+    result += lightAmount * baseColor * light.color;
+    
+    return result;
+}
 
 
