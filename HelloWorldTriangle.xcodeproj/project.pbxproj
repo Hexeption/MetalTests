@@ -26,6 +26,7 @@
 		44A391C72AC644DB00FA225D /* ground.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C52AC644DB00FA225D /* ground.mtl */; };
 		44A391C82AC644DB00FA225D /* ground.obj in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C62AC644DB00FA225D /* ground.obj */; };
 		44A391CA2AC6455500FA225D /* dirt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44A391C92AC6455500FA225D /* dirt.jpg */; };
+		44AB2D9C2AC64FC400ABC106 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AB2D9B2AC64FC400ABC106 /* Light.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		44A391C52AC644DB00FA225D /* ground.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ground.mtl; sourceTree = "<group>"; };
 		44A391C62AC644DB00FA225D /* ground.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ground.obj; sourceTree = "<group>"; };
 		44A391C92AC6455500FA225D /* dirt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dirt.jpg; sourceTree = "<group>"; };
+		44AB2D9B2AC64FC400ABC106 /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			children = (
 				44A391832AC6220700FA225D /* GameScene.swift */,
 				44A391C22AC641C400FA225D /* Entity.swift */,
+				44AB2D9B2AC64FC400ABC106 /* Light.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				44A391842AC6220700FA225D /* GameScene.swift in Sources */,
 				44A391932AC63C0000FA225D /* Material.swift in Sources */,
 				44A391912AC6352A00FA225D /* AppView.swift in Sources */,
+				44AB2D9C2AC64FC400ABC106 /* Light.swift in Sources */,
 				447A5B832AC611C1003CC565 /* Renderer.swift in Sources */,
 				447A5B752AC6112F003CC565 /* HelloWorldTriangleApp.swift in Sources */,
 				44A391C32AC641C400FA225D /* Entity.swift in Sources */,

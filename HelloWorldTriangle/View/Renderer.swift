@@ -95,7 +95,33 @@ class Renderer: NSObject, MTKViewDelegate {
             near: 0.1,
             far: 20
         )
+        cameraData.position = scene.player.position!
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
+        
+        // Sun
+        var sun: DirectionalLight = DirectionalLight()
+        sun.forwards = scene.sun.forwards!
+        sun.color = scene.sun.color
+        renderEncoder?.setFragmentBytes(&sun, length: MemoryLayout<DirectionalLight>.stride, index: 0)
+        
+        // Spotlight
+        var spotlight: Spotlight = Spotlight()
+        spotlight.forwards = scene.spotLight.forwards!
+        spotlight.color = scene.spotLight.color
+        spotlight.position = scene.spotLight.position!
+        renderEncoder?.setFragmentBytes(&spotlight, length: MemoryLayout<Spotlight>.stride, index: 1)
+        
+        // Pointlights
+        var pointLights: [Pointlight] = []
+        for light in scene.pointLights {
+            pointLights.append(Pointlight(position: light.position!, color: light.color))
+        }
+        renderEncoder?.setFragmentBytes(&pointLights, length: MemoryLayout<Pointlight>.stride, index: 2)
+        
+        var fragUBO: FragmentData = FragmentData()
+        fragUBO.lightCount = UInt32(scene.pointLights.count)
+        renderEncoder?.setFragmentBytes(&fragUBO, length: MemoryLayout<FragmentData>.stride * scene.pointLights.count, index: 3)
+        
         
         // Cube
         renderEncoder?.setVertexBuffer(

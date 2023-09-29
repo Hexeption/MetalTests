@@ -11,17 +11,30 @@ import SwiftUI
 class GameScene: ObservableObject {
     
     @Published var player: Entity
+    @Published var sun: Light
+    @Published var spotLight: Light
     @Published var cubes: [Entity]
     @Published var groundTiles: [Entity]
+    @Published var pointLights: [Light]
     
     init() {
         
         cubes = []
         groundTiles = []
+        pointLights = []
         
         let newPlayer = Entity()
         newPlayer.addCameraComponent(position: [-6, 6, 4], eulers: [0, 110, -45])
         player = newPlayer
+        
+        let newSpotLight = Light(color: [1.0, 0.0, 0.0])
+        newSpotLight.declareSpotlight(position: [-2, 0.0, 2.0], eulers: [0, 0.0, 180])
+        spotLight = newSpotLight
+        
+        let newSun = Light(color: [1.0, 1.0, 0.0])
+        newSun.declareDirectional(eulers: [0, 135, 45])
+        sun = newSun
+        sun.update()
         
         let newCube = Entity()
         newCube.addTransformComponent(position: [0.0, 0.0, 1.0], eulers: [0.0, 0.0, 0.0])
@@ -30,6 +43,13 @@ class GameScene: ObservableObject {
         let newTile = Entity()
         newTile.addTransformComponent(position: [0.0, 0.0, 0.0], eulers: [90.0, 0.0, 0.0])
         groundTiles.append(newTile)
+        
+        var newPointLight = Light(color: [0.0, 1.0, 1.0])
+        newPointLight.declarePointlight(rotationCenter: [0.0, 0.0, 1.0], pathRadius: 2.0, pathPhi: 60.0, angularVelocity: 1.0)
+        pointLights.append(newPointLight)
+        newPointLight = Light(color: [0.0, 0.0, 1.0])
+        newPointLight.declarePointlight(rotationCenter: [0.0, 0.0, 1.0], pathRadius: 3.0, pathPhi: 0.0, angularVelocity: 2.0)
+        pointLights.append(newPointLight)
     }
     
     func update() {
@@ -41,6 +61,12 @@ class GameScene: ObservableObject {
         
         for groundTile in groundTiles {
             groundTile.update()
+        }
+        
+        spotLight.update()
+        
+        for pointLight in pointLights {
+            pointLight.update()
         }
     }
     

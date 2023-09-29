@@ -42,9 +42,9 @@ class Matrix44{
         
         
         return float4x4(
-            [            right[0],             up2[0],             forwards[0],       0],
-            [            right[1],             up2[1],             forwards[1],       0],
-            [            right[2],             up2[2],             forwards[2],       0],
+            [            -right[0],             up2[0],             forwards[0],       0],
+            [            -right[1],             up2[1],             forwards[1],       0],
+            [            -right[2],             up2[2],             forwards[2],       0],
             [-simd.dot(right,eye), -simd.dot(up2,eye), -simd.dot(forwards,eye),       1]
         )
         
