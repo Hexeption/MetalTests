@@ -87,17 +87,39 @@ class Renderer: NSObject, MTKViewDelegate {
         renderEncoder?.setRenderPipelineState(pipelineState)
         renderEncoder?.setDepthStencilState(depthStencilState)
         
+        sendCameraData(renderEncoder: renderEncoder)
+        
+        sendLightData(renderEncoder: renderEncoder)
+        
+        
+        // Cube
+        prepareForRendering(renderEncoder: renderEncoder, mesh: cubeMesh, material: rockMaterial)
+        for cube in scene.cubes {
+            draw(renderEncoder: renderEncoder, mesh: cubeMesh, modelTransform: &(cube.model!))
+        }
+
+        // Ground
+        prepareForRendering(renderEncoder: renderEncoder, mesh: groundMesh, material: dirtMaterial)
+        for ground in scene.groundTiles {
+            draw(renderEncoder: renderEncoder, mesh: groundMesh, modelTransform: &(ground.model!))
+        }
+        
+        renderEncoder?.endEncoding()
+    
+        commandBuffer?.present(drawable)
+        commandBuffer?.commit()
+    }
+    
+    func sendCameraData(renderEncoder: MTLRenderCommandEncoder?) {
         var cameraData: CameraParameters = CameraParameters()
         cameraData.view = scene.player.view!
         cameraData.projection = Matrix44.create_perspective_projection(
-            fovy: 45,
-            aspect: 800/600,
-            near: 0.1,
-            far: 20
+            fovy: 45, aspect: 800/600, near: 0.1, far: 20
         )
-        cameraData.position = scene.player.position!
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
-        
+    }
+    
+    func sendLightData(renderEncoder: MTLRenderCommandEncoder?) {
         // Sun
         var sun: DirectionalLight = DirectionalLight()
         sun.forwards = scene.sun.forwards!
@@ -121,62 +143,24 @@ class Renderer: NSObject, MTKViewDelegate {
         var fragUBO: FragmentData = FragmentData()
         fragUBO.lightCount = UInt32(scene.pointLights.count)
         renderEncoder?.setFragmentBytes(&fragUBO, length: MemoryLayout<FragmentData>.stride * scene.pointLights.count, index: 3)
-        
-        
-        // Cube
-        renderEncoder?.setVertexBuffer(
-            cubeMesh.metalMesh.vertexBuffers[0].buffer,
-            offset: 0,
-            index: 0
-        )
-        
-        renderEncoder?.setFragmentTexture(rockMaterial.texture, index: 0)
-        renderEncoder?.setFragmentSamplerState(rockMaterial.sampler, index: 0)
-        for cube in scene.cubes {
-            
-            renderEncoder?.setVertexBytes(&(cube.model!), length: MemoryLayout<matrix_float4x4>.stride, index: 1)
-            
-            for submesh in cubeMesh.metalMesh.submeshes {
-                renderEncoder?.drawIndexedPrimitives(
-                    type: .triangle,
-                    indexCount: submesh.indexCount,
-                    indexType: submesh.indexType,
-                    indexBuffer: submesh.indexBuffer.buffer,
-                    indexBufferOffset: submesh.indexBuffer.offset
-                )
-            }
-        }
-        
-        // Ground
-        renderEncoder?.setVertexBuffer(
-            groundMesh.metalMesh.vertexBuffers[0].buffer,
-            offset: 0,
-            index: 0
-        )
-        
-        renderEncoder?.setFragmentTexture(dirtMaterial.texture, index: 0)
-        renderEncoder?.setFragmentSamplerState(dirtMaterial.sampler, index: 0)
-        for ground in scene.groundTiles {
-            
-            renderEncoder?.setVertexBytes(&(ground.model!), length: MemoryLayout<matrix_float4x4>.stride, index: 1)
-            
-            for submesh in groundMesh.metalMesh.submeshes {
-                renderEncoder?.drawIndexedPrimitives(
-                    type: .triangle,
-                    indexCount: submesh.indexCount,
-                    indexType: submesh.indexType,
-                    indexBuffer: submesh.indexBuffer.buffer,
-                    indexBufferOffset: submesh.indexBuffer.offset
-                )
-            }
-        }
-        
-        renderEncoder?.endEncoding()
-    
-        
-        commandBuffer?.present(drawable)
-        commandBuffer?.commit()
     }
     
+    func prepareForRendering(renderEncoder: MTLRenderCommandEncoder?, mesh: OBJMesh, material: Material) {
+        renderEncoder?.setVertexBuffer(mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+        renderEncoder?.setFragmentTexture(material.texture, index: 0)
+        renderEncoder?.setFragmentSamplerState(material.sampler, index: 0)
+    }
+    
+    func draw(renderEncoder: MTLRenderCommandEncoder?, mesh: OBJMesh, modelTransform: UnsafeMutablePointer<matrix_float4x4>) {
+        renderEncoder?.setVertexBytes(modelTransform, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+        
+        for submesh in mesh.metalMesh.submeshes {
+            renderEncoder?.drawIndexedPrimitives(
+                type: .triangle, indexCount: submesh.indexCount,
+                indexType: submesh.indexType, indexBuffer: submesh.indexBuffer.buffer,
+                indexBufferOffset: submesh.indexBuffer.offset
+            )
+        }
+    }
     
 }
