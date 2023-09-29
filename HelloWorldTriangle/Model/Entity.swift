@@ -29,14 +29,25 @@ class Entity {
         self.hasTransformComponent = true
         self.position = position
         self.eulers = eulers
-        self.model = Matrix44.create_identity()
+        update()
     }
     
     func addCameraComponent(position: simd_float3, eulers: simd_float3) {
         self.hasCameraComponent = true
         self.position = position
         self.eulers = eulers
-        self.view = Matrix44.create_identity()
+        update()
+    }
+    
+    func strafe(rightAmmount: Float, upAmmount: Float) {
+        position = position! + rightAmmount * right! + upAmmount * up!
+        
+        let distance: Float = simd.length(position!)
+        moveForwards(ammount: distance - 10.0)
+    }
+    
+    func moveForwards(ammount: Float) {
+        position = position! + ammount * forwards!
     }
     
     func update() {
@@ -47,11 +58,7 @@ class Entity {
         }
         
         if hasCameraComponent {
-            forwards = [
-                cos(eulers![2] * .pi / 180.0) * sin(eulers![1] * .pi / 180.0),
-                sin(eulers![2] * .pi / 180.0) * sin(eulers![1] * .pi / 180.0),
-                cos(eulers![1] * .pi / 180.0)
-            ]
+            forwards = simd.normalize([0,0,0] - position!)
             
             let globalUp: vector_float3 = [0.0, 0.0, 1.0]
             
@@ -61,7 +68,7 @@ class Entity {
             
             view = Matrix44.create_lookat(
                 eye: position!,
-                target: position! + forwards!,
+                target: [0,0,0],
                 up: up!
             )
             

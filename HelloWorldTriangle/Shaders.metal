@@ -66,6 +66,7 @@ fragment float4 fragmentShader(
     constant FragmentData &fragUBO [[buffer(3)]]
 ) {
     float3 baseColor = float3(objectTexture.sample(samplerObject, input.textureCoord));
+    float alpha = objectTexture.sample(samplerObject, input.textureCoord).a;
     
     //directions
     float3 fragCamera = normalize(input.cameraPos - input.fragPos);
@@ -83,7 +84,7 @@ fragment float4 fragmentShader(
         color += applyPointLight(input.fragPos, input.normal, pointLights[i], baseColor, fragCamera);
     }
     
-    return float4(color, 1.0);
+    return float4(color, alpha);
 };
 
 float3 applyDirectionalLight(float3 normal, DirectionalLight light, float3 baseColor, float3 fragCamera) {

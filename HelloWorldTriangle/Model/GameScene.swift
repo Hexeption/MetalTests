@@ -16,6 +16,7 @@ class GameScene: ObservableObject {
     @Published var cubes: [Entity]
     @Published var groundTiles: [Entity]
     @Published var pointLights: [Light]
+    @Published var cat: Billboard
     
     init() {
         
@@ -27,11 +28,14 @@ class GameScene: ObservableObject {
         newPlayer.addCameraComponent(position: [-6, 6, 4], eulers: [0, 110, -45])
         player = newPlayer
         
+        let newCat = Billboard(position: [0.0, 0.0, 3])
+        cat = newCat
+        
         let newSpotLight = Light(color: [1.0, 0.0, 0.0])
         newSpotLight.declareSpotlight(position: [-2, 0.0, 2.0], eulers: [0, 0.0, 180])
         spotLight = newSpotLight
         
-        let newSun = Light(color: [1.0, 1.0, 0.0])
+        let newSun = Light(color: [0.7, 0.7, 0.7])
         newSun.declareDirectional(eulers: [0, 135, 45])
         sun = newSun
         sun.update()
@@ -52,6 +56,10 @@ class GameScene: ObservableObject {
         pointLights.append(newPointLight)
     }
     
+    func updateView() {
+        self.objectWillChange.send()
+    }
+    
     func update() {
         player.update()
         
@@ -68,6 +76,10 @@ class GameScene: ObservableObject {
         for pointLight in pointLights {
             pointLight.update()
         }
+        
+        cat.update(viewerPosition: player.position!)
+        
+        updateView()
     }
     
     func spinPlayer(offset: CGSize) {
@@ -88,5 +100,12 @@ class GameScene: ObservableObject {
         } else if player.eulers!.y > 179 {
             player.eulers!.y = 179
         }
+    }
+    
+    func strafePlayer(offset: CGSize) {
+        let rightAmmount: Float = Float(offset.width) / 1000
+        let upAmmount: Float = Float(offset.height) / 1000
+          
+        player.strafe(rightAmmount: rightAmmount, upAmmount: upAmmount)
     }
 }

@@ -12,7 +12,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var parent: ContentView
     var metalDevice: MTLDevice!
     var metalCommandQueue: MTLCommandQueue!
-    var allocator: MTKMeshBufferAllocator
+    var meshAllocator: MTKMeshBufferAllocator
     var materialLoader: MTKTextureLoader
     let pipelineState: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
@@ -21,9 +21,11 @@ class Renderer: NSObject, MTKViewDelegate {
     
     let cubeMesh: OBJMesh
     let groundMesh: OBJMesh
+    let catMesh: OBJMesh
     
     let rockMaterial: Material
     let dirtMaterial: Material
+    let catMaterial: Material
     
     init(_ parent: ContentView, scene: GameScene) {
         self.parent = parent
@@ -31,20 +33,30 @@ class Renderer: NSObject, MTKViewDelegate {
             self.metalDevice = metalDevice
         }
         self.metalCommandQueue = metalDevice.makeCommandQueue()
-        self.allocator = MTKMeshBufferAllocator(device: metalDevice)
+        self.meshAllocator = MTKMeshBufferAllocator(device: metalDevice)
         self.materialLoader = MTKTextureLoader(device: metalDevice)
         
-        cubeMesh = OBJMesh(device: metalDevice, allocator: allocator, fileName: "cube")
+        cubeMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "cube")
         rockMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cubeTexture")
         
-        groundMesh = OBJMesh(device: metalDevice, allocator: allocator, fileName: "ground")
+        groundMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "ground")
         dirtMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "dirt")
+        
+        catMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "cat")
+        catMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cat")
         
         let pipeDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
         pipeDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
         pipeDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
         pipeDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipeDescriptor.colorAttachments[0].isBlendingEnabled = true
+        pipeDescriptor.colorAttachments[0].alphaBlendOperation = .add
+        pipeDescriptor.colorAttachments[0].rgbBlendOperation = .add
+        pipeDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+        pipeDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+        pipeDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
+        pipeDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         pipeDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(cubeMesh.metalMesh.vertexDescriptor)
         pipeDescriptor.depthAttachmentPixelFormat = .depth32Float
         
@@ -103,6 +115,9 @@ class Renderer: NSObject, MTKViewDelegate {
         for ground in scene.groundTiles {
             draw(renderEncoder: renderEncoder, mesh: groundMesh, modelTransform: &(ground.model!))
         }
+        
+        prepareForRendering(renderEncoder: renderEncoder, mesh: catMesh, material: catMaterial)
+        draw(renderEncoder: renderEncoder, mesh: catMesh, modelTransform: &(scene.cat.model))
         
         renderEncoder?.endEncoding()
     
