@@ -13,19 +13,21 @@ class Material {
     let texture: MTLTexture
     let sampler: MTLSamplerState
     
-    init(device: MTLDevice, allocator: MTKTextureLoader, fileName: String) {
-        guard let materialURL = Bundle.main.url(forResource: fileName, withExtension: "jpg") else {
+    init(device: MTLDevice, allocator: MTKTextureLoader, fileName: String, filenameExtension: String) {
+   
+        let options: [MTKTextureLoader.Option : Any] = [
+            .SRGB: false,
+            .generateMipmaps: true
+        ]
+        
+        guard let materialURL = Bundle.main.url(forResource: fileName, withExtension: filenameExtension) else {
             fatalError()
         }
-        
-        let options: [MTKTextureLoader.Option : Any] = [
-            .SRGB: false
-        ]
         
         do {
             texture = try allocator.newTexture(URL: materialURL, options: options)
         } catch {
-            fatalError()
+            fatalError("couldn't load material from \(fileName)")
         }
         
         let samplerDescriptor = MTLSamplerDescriptor()
@@ -33,6 +35,7 @@ class Material {
         samplerDescriptor.tAddressMode = .repeat
         samplerDescriptor.minFilter = .nearest
         samplerDescriptor.magFilter = .linear
+        samplerDescriptor.maxAnisotropy = 8
         
         sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
     }

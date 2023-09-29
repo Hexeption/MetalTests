@@ -14,7 +14,10 @@ class Renderer: NSObject, MTKViewDelegate {
     var metalCommandQueue: MTLCommandQueue!
     var meshAllocator: MTKMeshBufferAllocator
     var materialLoader: MTKTextureLoader
-    let pipelineState: MTLRenderPipelineState
+    
+    let litPipleline: MTLRenderPipelineState
+    let unlitPipleline: MTLRenderPipelineState
+    
     let depthStencilState: MTLDepthStencilState
     
     let scene: GameScene
@@ -22,10 +25,12 @@ class Renderer: NSObject, MTKViewDelegate {
     let cubeMesh: OBJMesh
     let groundMesh: OBJMesh
     let catMesh: OBJMesh
+    let lightMesh: OBJMesh
     
     let rockMaterial: Material
     let dirtMaterial: Material
     let catMaterial: Material
+    let lightMaterial: Material
     
     init(_ parent: ContentView, scene: GameScene) {
         self.parent = parent
@@ -37,39 +42,28 @@ class Renderer: NSObject, MTKViewDelegate {
         self.materialLoader = MTKTextureLoader(device: metalDevice)
         
         cubeMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "cube")
-        rockMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cubeTexture")
+        rockMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cubeTexture", filenameExtension: "jpg")
         
         groundMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "ground")
-        dirtMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "dirt")
+        dirtMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "dirt", filenameExtension: "jpg")
         
         catMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "cat")
-        catMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cat")
+        catMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "cat", filenameExtension: "png")
         
-        let pipeDescriptor = MTLRenderPipelineDescriptor()
-        let library = metalDevice.makeDefaultLibrary()
-        pipeDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
-        pipeDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
-        pipeDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        pipeDescriptor.colorAttachments[0].isBlendingEnabled = true
-        pipeDescriptor.colorAttachments[0].alphaBlendOperation = .add
-        pipeDescriptor.colorAttachments[0].rgbBlendOperation = .add
-        pipeDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
-        pipeDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
-        pipeDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
-        pipeDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
-        pipeDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(cubeMesh.metalMesh.vertexDescriptor)
-        pipeDescriptor.depthAttachmentPixelFormat = .depth32Float
+        lightMesh = OBJMesh(device: metalDevice, allocator: meshAllocator, fileName: "light")
+        lightMaterial = Material(device: metalDevice, allocator: materialLoader, fileName: "light", filenameExtension: "png")
+        
+        guard let library: MTLLibrary = metalDevice.makeDefaultLibrary() else {
+            fatalError()
+        }
+        let vertexDescriptor: MDLVertexDescriptor = cubeMesh.modelIOMesh.vertexDescriptor
+        litPipleline = PipelineBuilder.BuildPipeline(metalDevice: metalDevice, library: library, vsEntry: "vertexShader", fsEntry: "fragmentShader", vertexDescriptor: vertexDescriptor)
+        unlitPipleline = PipelineBuilder.BuildPipeline(metalDevice: metalDevice, library: library, vsEntry: "vertexShaderUnlit", fsEntry: "fragmentShaderUnlit", vertexDescriptor: vertexDescriptor)
         
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .less
         depthStencilDescriptor.isDepthWriteEnabled = true
         depthStencilState = metalDevice.makeDepthStencilState(descriptor: depthStencilDescriptor)!
-        
-        do {
-            try pipelineState = metalDevice.makeRenderPipelineState(descriptor: pipeDescriptor)
-        }catch {
-            fatalError()
-        }
         
         self.scene = scene
         
@@ -96,7 +90,19 @@ class Renderer: NSObject, MTKViewDelegate {
         renderPassDescriptor?.colorAttachments[0].storeAction = .store
         
         let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor!)
-        renderEncoder?.setRenderPipelineState(pipelineState)
+        
+        drawLitObjects(renderEncoder: renderEncoder)
+        
+        drawUnlitObjects(renderEncoder: renderEncoder)
+        
+        renderEncoder?.endEncoding()
+    
+        commandBuffer?.present(drawable)
+        commandBuffer?.commit()
+    }
+    
+    func drawLitObjects(renderEncoder: MTLRenderCommandEncoder?) {
+        renderEncoder?.setRenderPipelineState(litPipleline)
         renderEncoder?.setDepthStencilState(depthStencilState)
         
         sendCameraData(renderEncoder: renderEncoder)
@@ -118,11 +124,21 @@ class Renderer: NSObject, MTKViewDelegate {
         
         prepareForRendering(renderEncoder: renderEncoder, mesh: catMesh, material: catMaterial)
         draw(renderEncoder: renderEncoder, mesh: catMesh, modelTransform: &(scene.cat.model))
-        
-        renderEncoder?.endEncoding()
+    }
     
-        commandBuffer?.present(drawable)
-        commandBuffer?.commit()
+    func drawUnlitObjects(renderEncoder: MTLRenderCommandEncoder?) {
+        renderEncoder?.setRenderPipelineState(unlitPipleline)
+        renderEncoder?.setDepthStencilState(depthStencilState)
+        
+        sendCameraData(renderEncoder: renderEncoder)
+        
+        prepareForRendering(renderEncoder: renderEncoder, mesh: lightMesh, material: lightMaterial)
+        for light in scene.pointLights {
+            renderEncoder?.setFragmentBytes(&(light.color), length: MemoryLayout<simd_float3>.stride, index: 0)
+            draw(renderEncoder: renderEncoder, mesh: lightMesh, modelTransform: &(light.model))
+        }
+        
+      
     }
     
     func sendCameraData(renderEncoder: MTLRenderCommandEncoder?) {
@@ -151,7 +167,7 @@ class Renderer: NSObject, MTKViewDelegate {
         // Pointlights
         var pointLights: [Pointlight] = []
         for light in scene.pointLights {
-            pointLights.append(Pointlight(position: light.position!, color: light.color))
+            pointLights.append(Pointlight(position: light.position, color: light.color))
         }
         renderEncoder?.setFragmentBytes(&pointLights, length: MemoryLayout<Pointlight>.stride, index: 2)
         

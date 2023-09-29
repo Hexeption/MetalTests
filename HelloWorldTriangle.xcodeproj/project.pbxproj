@@ -30,7 +30,13 @@
 		44AB2D9F2AC6620000ABC106 /* cat.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2D9D2AC661FF00ABC106 /* cat.mtl */; };
 		44AB2DA02AC6620000ABC106 /* cat.obj in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2D9E2AC6620000ABC106 /* cat.obj */; };
 		44AB2DA42AC6691B00ABC106 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AB2DA32AC6691B00ABC106 /* Billboard.swift */; };
-		44AB2DA82AC66B0200ABC106 /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2DA72AC66B0200ABC106 /* cat.jpg */; };
+		44AB2DAA2AC6708F00ABC106 /* light.png in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2DA92AC6708F00ABC106 /* light.png */; };
+		44AB2DAD2AC6709A00ABC106 /* light.obj in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2DAB2AC6709A00ABC106 /* light.obj */; };
+		44AB2DAE2AC6709A00ABC106 /* light.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2DAC2AC6709A00ABC106 /* light.mtl */; };
+		44AB2DB02AC6717B00ABC106 /* BrightBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AB2DAF2AC6717B00ABC106 /* BrightBillboard.swift */; };
+		44AB2DB22AC6738400ABC106 /* UnlitShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 44AB2DB12AC6738400ABC106 /* UnlitShaders.metal */; };
+		44AB2DB42AC6752F00ABC106 /* PipelineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AB2DB32AC6752F00ABC106 /* PipelineBuilder.swift */; };
+		44AB2DB62AC6793400ABC106 /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = 44AB2DB52AC6793400ABC106 /* cat.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +65,13 @@
 		44AB2D9D2AC661FF00ABC106 /* cat.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cat.mtl; sourceTree = "<group>"; };
 		44AB2D9E2AC6620000ABC106 /* cat.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cat.obj; sourceTree = "<group>"; };
 		44AB2DA32AC6691B00ABC106 /* Billboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
-		44AB2DA72AC66B0200ABC106 /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
+		44AB2DA92AC6708F00ABC106 /* light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light.png; sourceTree = "<group>"; };
+		44AB2DAB2AC6709A00ABC106 /* light.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.obj; sourceTree = "<group>"; };
+		44AB2DAC2AC6709A00ABC106 /* light.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.mtl; sourceTree = "<group>"; };
+		44AB2DAF2AC6717B00ABC106 /* BrightBillboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightBillboard.swift; sourceTree = "<group>"; };
+		44AB2DB12AC6738400ABC106 /* UnlitShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = UnlitShaders.metal; sourceTree = "<group>"; };
+		44AB2DB32AC6752F00ABC106 /* PipelineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineBuilder.swift; sourceTree = "<group>"; };
+		44AB2DB52AC6793400ABC106 /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +114,7 @@
 				447A5B852AC618AB003CC565 /* Shaders.metal */,
 				44A391852AC6235000FA225D /* LinearAlgebro.swift */,
 				447A5B742AC6112F003CC565 /* HelloWorldTriangleApp.swift */,
+				44AB2DB12AC6738400ABC106 /* UnlitShaders.metal */,
 			);
 			path = HelloWorldTriangle;
 			sourceTree = "<group>";
@@ -121,6 +134,7 @@
 				44A391C22AC641C400FA225D /* Entity.swift */,
 				44AB2D9B2AC64FC400ABC106 /* Light.swift */,
 				44AB2DA32AC6691B00ABC106 /* Billboard.swift */,
+				44AB2DAF2AC6717B00ABC106 /* BrightBillboard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -134,6 +148,7 @@
 				44A3918E2AC62C4500FA225D /* OBJMesh.swift */,
 				44A391902AC6352A00FA225D /* AppView.swift */,
 				44A391922AC63C0000FA225D /* Material.swift */,
+				44AB2DB32AC6752F00ABC106 /* PipelineBuilder.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -146,6 +161,8 @@
 				44A3918A2AC62B3700FA225D /* cube.obj */,
 				44A3918B2AC62B3700FA225D /* cube.mtl */,
 				44A391C52AC644DB00FA225D /* ground.mtl */,
+				44AB2DAC2AC6709A00ABC106 /* light.mtl */,
+				44AB2DAB2AC6709A00ABC106 /* light.obj */,
 				44A391C62AC644DB00FA225D /* ground.obj */,
 			);
 			path = models;
@@ -155,7 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				44A391C92AC6455500FA225D /* dirt.jpg */,
-				44AB2DA72AC66B0200ABC106 /* cat.jpg */,
+				44AB2DB52AC6793400ABC106 /* cat.png */,
+				44AB2DA92AC6708F00ABC106 /* light.png */,
 				44A391C02AC63E1000FA225D /* cubeTexture.jpg */,
 			);
 			path = textures;
@@ -220,15 +238,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				44AB2DA02AC6620000ABC106 /* cat.obj in Resources */,
-				44AB2DA82AC66B0200ABC106 /* cat.jpg in Resources */,
 				44A3918C2AC62B3700FA225D /* cube.obj in Resources */,
+				44AB2DAD2AC6709A00ABC106 /* light.obj in Resources */,
+				44AB2DAE2AC6709A00ABC106 /* light.mtl in Resources */,
 				44A391C82AC644DB00FA225D /* ground.obj in Resources */,
 				44A391CA2AC6455500FA225D /* dirt.jpg in Resources */,
 				447A5B7C2AC6112F003CC565 /* Preview Assets.xcassets in Resources */,
 				44A3918D2AC62B3700FA225D /* cube.mtl in Resources */,
 				44A391C12AC63E1000FA225D /* cubeTexture.jpg in Resources */,
+				44AB2DAA2AC6708F00ABC106 /* light.png in Resources */,
 				44AB2D9F2AC6620000ABC106 /* cat.mtl in Resources */,
 				44A391C72AC644DB00FA225D /* ground.mtl in Resources */,
+				44AB2DB62AC6793400ABC106 /* cat.png in Resources */,
 				447A5B792AC6112F003CC565 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,6 +264,7 @@
 				44A3918F2AC62C4500FA225D /* OBJMesh.swift in Sources */,
 				447A5B862AC618AB003CC565 /* Shaders.metal in Sources */,
 				447A5B772AC6112F003CC565 /* ContentView.swift in Sources */,
+				44AB2DB02AC6717B00ABC106 /* BrightBillboard.swift in Sources */,
 				44A391842AC6220700FA225D /* GameScene.swift in Sources */,
 				44A391932AC63C0000FA225D /* Material.swift in Sources */,
 				44A391912AC6352A00FA225D /* AppView.swift in Sources */,
@@ -251,6 +273,8 @@
 				447A5B752AC6112F003CC565 /* HelloWorldTriangleApp.swift in Sources */,
 				44A391C32AC641C400FA225D /* Entity.swift in Sources */,
 				44A391862AC6235000FA225D /* LinearAlgebro.swift in Sources */,
+				44AB2DB22AC6738400ABC106 /* UnlitShaders.metal in Sources */,
+				44AB2DB42AC6752F00ABC106 /* PipelineBuilder.swift in Sources */,
 				44AB2DA42AC6691B00ABC106 /* Billboard.swift in Sources */,
 				44A3917E2AC620A700FA225D /* TrinagleMesh.swift in Sources */,
 			);

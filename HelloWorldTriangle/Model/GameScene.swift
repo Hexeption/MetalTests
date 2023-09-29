@@ -15,7 +15,7 @@ class GameScene: ObservableObject {
     @Published var spotLight: Light
     @Published var cubes: [Entity]
     @Published var groundTiles: [Entity]
-    @Published var pointLights: [Light]
+    @Published var pointLights: [BrightBillboard]
     @Published var cat: Billboard
     
     init() {
@@ -48,11 +48,9 @@ class GameScene: ObservableObject {
         newTile.addTransformComponent(position: [0.0, 0.0, 0.0], eulers: [90.0, 0.0, 0.0])
         groundTiles.append(newTile)
         
-        var newPointLight = Light(color: [0.0, 1.0, 1.0])
-        newPointLight.declarePointlight(rotationCenter: [0.0, 0.0, 1.0], pathRadius: 2.0, pathPhi: 60.0, angularVelocity: 1.0)
+        var newPointLight = BrightBillboard(position: [0.0, 0.0, 1.0], color: [0.0, 1.0, 1.0], rotation_center: [0.0, 0.0, 1.0], pathRadius: 2.0, pathPhi: 60.0, angularVelocity: 1.0)
         pointLights.append(newPointLight)
-        newPointLight = Light(color: [0.0, 0.0, 1.0])
-        newPointLight.declarePointlight(rotationCenter: [0.0, 0.0, 1.0], pathRadius: 3.0, pathPhi: 0.0, angularVelocity: 2.0)
+        newPointLight = BrightBillboard(position: [0.0, 0.0, 1.0], color: [0.0, 0.0, 1.0], rotation_center: [0.0, 0.0, 1.0], pathRadius: 3.0, pathPhi: 0.0, angularVelocity: 2.0)
         pointLights.append(newPointLight)
     }
     
@@ -74,7 +72,7 @@ class GameScene: ObservableObject {
         spotLight.update()
         
         for pointLight in pointLights {
-            pointLight.update()
+            pointLight.update(viewerPosition: player.position!)
         }
         
         cat.update(viewerPosition: player.position!)
